@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import requests
 import pprint
 
@@ -13,10 +15,19 @@ def get_token(username, password):
     return token
 
 
+def with_auth(func):
+    def auth_wrapper(username, password, *args):
+        token = get_token(username, password)
+        func(token, *args)
+
+    return auth_wrapper
+
+
 def gen_quth_header(token):
     return {"Authorization": "Bearer " + token}
 
 
+@with_auth
 def query_tasks(token):
     query_task_request = requests.get(SERVER_URL + "/task", headers=gen_quth_header(token))
     pprint.pprint(query_task_request.json())
@@ -48,3 +59,11 @@ def update_task(token, id, description, complete):
     update_request = requests.put(SERVER_URL + "/task/" + id, headers=gen_quth_header(token), json=updated_task)
 
     pprint.pprint(update_request.json())
+
+
+def run_test():
+    query_tasks("admin", "admin")
+
+
+if __name__ == "__main__":
+    run_test()

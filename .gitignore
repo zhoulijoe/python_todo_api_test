@@ -1,2 +1,5 @@
-# PyCharm
-workspace.xml
+# Python
+*.pyc
+
+# virtualenv
+venv/
