@@ -12,4 +12,9 @@ Api test against todo server
 
 ## Run Test
 
-    python todoapitest/todo_api.py
+    python todoapitest/todo_api.py -h
+
+### Example
+
+    # Get tasks for admin user
+    python todoapitest/todo_api.py get_tasks -p admin -p admin
